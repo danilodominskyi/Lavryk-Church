@@ -969,6 +969,7 @@ body {
     background: #fff;
     border-radius: var(--radius);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+    width: min(860px, 94vw);
     max-width: 94vw;
     max-height: 92vh;
     overflow: auto;
@@ -1036,7 +1037,8 @@ body {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
     gap: 1rem;
-    width: min(1040px, 92vw);
+    width: 100%;
+    max-width: 1040px;
     align-items: start;
 }
 
@@ -1143,10 +1145,48 @@ body {
     font-weight: 600;
 }
 
+@media (max-width: 600px) {
+    .modal-overlay {
+        padding: 0;
+    }
+
+    .modal-window {
+        width: 100vw;
+        max-width: 100vw;
+        transform: none; /* на мобільних виключаємо scale-стрибок позиціювання */
+    }
+
+    .modal-overlay.is-open .modal-window {
+        transform: none;
+    }
+
+    .modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 1.45rem;
+    }
+
+    .modal-content {
+        padding: 1rem 0.9rem 0.9rem;
+    }
+
+    .modal-content .modal-photo {
+        max-height: calc(92vh - 3.75rem);
+    }
+
+    /* UMH-події: щоб фото/текст не виглядали “вужче ніж модалка” */
+    .umh-modal {
+        gap: 0.85rem;
+    }
+}
+
 @media (max-width: 900px) {
     .umh-modal {
         grid-template-columns: 1fr;
-        width: min(98vw, 700px);
+        width: 100%;
+        max-width: 700px;
     }
 
     .umh-modal__photo-wrap,
