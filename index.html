@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наша Парафія — Різдва Пресвятої Богородиці, с. Лавриків</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <noscript>Увімкніть JavaScript для навігації по розділах.</noscript>
+
+        <header class="site-header">
+            <div class="site-header__inner">
+                <a href="" class="site-brand" id="site-brand-home" >
+                    <img src="img/Screenshot 2025-11-03 214700.png" alt="" class="site-brand__img" width="44" height="44" decoding="async">
+                    <span class="site-brand__text">Наша Парафія</span>
+                </a>
+                <button type="button" class="nav-toggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="site-nav"></button>   
+                <nav id="site-nav" class="main-nav" aria-label="Головна навігація">
+                    <ul class="menu">
+                        <li>
+                            <a href="#" class="active" data-target=".home_view">Головна</a>
+                        </li>
+                        <li class="menu__has-sub">
+                            <a href="#" data-target=".community_view">Спільноти</a>
+                            <ul class="submenu">
+                                <li><a href="#" data-target=".umh_view">УМХ</a></li>                                       
+                                <li><a href="#" data-target=".old_hor">Парафіяльний Хор</a></li>
+                                <li><a href="#" data-target=".new_hor">Молодіжний хор</a></li>
+                                <li><a href="#" data-target=".community_of_biblia">Біблійний гурток</a></li>
+                                <li><a href="#" data-target=".apostol">Апостольство молитви</a></li>
+                                <li><a href="#" data-target=".rada">Парафіяльна рада</a></li>
+                                <li><a href="#" data-target=".altarers">Вівтарники</a></li>
+                                <li><a href="#" data-target=".sesters">Сестрицтво</a></li>
+                                <li><a href="#" data-target=".mariiska_druzhina">Марійська дружина</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" data-target=".church_leaders_view">Церковний клір</a>
+                        </li>
+                        <li>
+                            <a href="#" data-target=".somthing_view">Розпорядок Богослужінь</a>
+                        </li>
+                        <li>
+                            <a href="#" data-target=".contacts_view">Контакти</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="full">                               
+            <main class="site-main">
+
+            <section class="hero" aria-label="Парафія">        
+                <div class="hero__overlay"></div>
+                <div class="hero__content">
+                    <h1 class="hero__title">Наша Парафія</h1>
+                    <p class="hero__subtitle">Різдва Пресвятої Богородиці</p>
+                    <p class="hero__place">с. Лавриків</p>
+                </div>
+            </section>
+
+        <div class="home_view">                     
+            <div class="content-panel content-panel--home">
+                <h2 class="umh-events__heading">Наші події</h2>
+
+                <div id="events-main-home_view" class="umh-events__grid"></div>
+
+                <div id="events-more-home_view" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-home_view">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="community_view hidden">
+            <div class="content-panel">
+                <h2 class="section-heading">Оберіть спільноту, щоб дізнатися більше:</h2>
+                <div class="community_cards">
+                    <div class="community_card">
+                        <a href="" data-target=".umh_view" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo.umh.jpg" alt="УМХ" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">УМХ</span>
+                                    <span class="community_card_sub">Молодіжна спільнота парафії</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".old_hor" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Парафіяльний Хор" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Парафіяльний Хор</span>
+                                    <span class="community_card_sub">Хорова спільнота храму</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".new_hor" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Молодіжний хор" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Молодіжний хор</span>
+                                    <span class="community_card_sub">Спів і молитва для молоді</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".community_of_biblia" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Біблійний гурток" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M18 2H6a2 2 0 00-2 2v16c0 1.1.9 2 2 2h12a2 2 0 002-2V4a2 2 0 00-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Біблійний гурток</span>
+                                    <span class="community_card_sub">Слово Боже та спільна молитва</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".apostol" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Апостольство молитви" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M13 2h-2v8H3v4h8v8h2v-8h8v-4h-8V2z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Апостольство молитви</span>
+                                    <span class="community_card_sub">Молитва за наміри Церкви</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".rada" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Парафіяльна рада" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Парафіяльна рада</span>
+                                    <span class="community_card_sub">Організація життя парафії</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".altarers" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Вівтарники" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 2.18l6 2.25v4.66c0 4.14-2.77 7.98-6 9.05-3.23-1.07-6-4.91-6-9.05V6.43l6-2.25zm-1 5.82h2v6h-2v-6zm0 8h2v2h-2v-2z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Вівтарники</span>
+                                    <span class="community_card_sub">Служіння при вівтарі</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".sesters" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Сестрицтво" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Сестрицтво</span>
+                                    <span class="community_card_sub">Жіноча церковна спільнота</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="community_card">
+                        <a href="" data-target=".mariiska_druzhina" class="community_card_link">
+                            <div class="community_card_media">
+                                <img src="img/photo_2025-11-05_01-40-18.jpg" alt="Марійська дружина" class="community_card_img" loading="lazy" width="400" height="240">
+                            </div>
+                            <div class="community_card_body">
+                                <span class="community_card_icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" fill="currentColor"/></svg>
+                                </span>
+                                <div class="community_card_meta">
+                                    <span class="community_card_title">Марійська дружина</span>
+                                    <span class="community_card_sub">Пошана до Пресвятої Богородиці</span>
+                                </div>
+                                <span class="community_card_arrow" aria-hidden="true">›</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="umh_view hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+
+                <div id="events-main-umh_view" class="umh-events__grid"></div>
+
+                <div id="events-more-umh_view" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-umh_view">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="old_hor hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-old_hor" class="umh-events__grid"></div>
+                <div id="events-more-old_hor" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-old_hor">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="new_hor hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-new_hor" class="umh-events__grid"></div>
+                <div id="events-more-new_hor" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-new_hor">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="community_of_biblia hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-community_of_biblia" class="umh-events__grid"></div>
+                <div id="events-more-community_of_biblia" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-community_of_biblia">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="apostol hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-apostol" class="umh-events__grid"></div>
+                <div id="events-more-apostol" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-apostol">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="rada hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-rada" class="umh-events__grid"></div>
+                <div id="events-more-rada" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-rada">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="altarers hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-altarers" class="umh-events__grid"></div>
+                <div id="events-more-altarers" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-altarers">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+        <div class="sesters hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-sesters" class="umh-events__grid"></div>
+                <div id="events-more-sesters" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-sesters">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mariiska_druzhina hidden">
+            <div class="content-panel umh-events">
+                <h2 class="umh-events__heading">Наші події</h2>
+                <div id="events-main-mariiska_druzhina" class="umh-events__grid"></div>
+                <div id="events-more-mariiska_druzhina" class="umh-events__grid umh-events__grid--extra hidden" hidden></div>
+                <div class="umh-events__actions">
+                    <button type="button" class="umh-events__btn" id="events-show-all-mariiska_druzhina">Дивитись всі події</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="church_leaders_view hidden">
+            <div class="content-panel">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Sequi optio atque corrupti dolorum repudiandae soluta temporibus,
+                voluptatum cumque in quisquam cupiditate? Ut consequuntur alias voluptate
+                consequatur? Est expedita eveniet modi!</p>
+            </div>
+        </div>
+        <div class="somthing_view hidden">
+            <div class="content-panel content-panel--wide">
+                <div class="schedule-cards">
+                    <div class="schedule-container">
+                        <div class="schedule-photo">
+                            <img src="img/розпорядок1.jpg" loading="lazy" alt="Розпорядок богослужінь" title="Натисніть, щоб відкрити">
+                        </div>
+                        <div class="schedule-text">
+                            <h2>Розпорядок богослужінь</h2>
+                            <p>Парафія храму Різдва Пресвятої Богородиці с. Лавриків</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contacts_view hidden">
+            <div class="content-panel">
+                <p class="text_contacts">Храм Різдва Пресвятої Богородиці  Львівська обл., Жовківський район, село Лавриків</p>
+                <div class="map-container">
+                    <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3146.5171233741607!2d23.76190427690298!3d50.13926140972092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473b31f4f869adaf%3A0x8fa5efaf5ac039b2!2sKhram%20Rizdva%20Presvyatoyi%20Bohorodytsi!5e1!3m2!1sen!2sua!4v1763669102646!5m2!1sen!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <h2 class="contacts_fones">телефони:</h2>
+                <p class="contacts_fones_numbers">Адміністратор храму о. Ігор Домінський: +380671958187</p>
+                <p class="contacts_fones_numbers">Дяк Василь: +380983208298</p>
+            </div>
+        </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+        <div class="modal-window">
+            <button type="button" class="modal-close" aria-label="Закрити">&times;</button>
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <script src="Js/index.js"></script>
+</body>
+</html>
