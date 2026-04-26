@@ -1,0 +1,875 @@
+const links = document.querySelectorAll('a[data-target]');
+const sections = document.querySelectorAll('.home_view, .old_church_view, .community_view, .umh_view, .old_hor, .new_hor, .community_of_biblia, .apostol, .mariiska_druzhina, .multimedia_view, .somthing_view, .our_work_view, .contacts_view');
+
+const mainNav = document.querySelector('.main-nav');
+const navToggle = document.querySelector('.nav-toggle');
+
+function closeMobileNav() {
+  mainNav?.classList.remove('is-open');
+  if (navToggle) {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.classList.remove('is-open');
+  }
+}
+
+navToggle?.addEventListener('click', function () {
+  if (!mainNav) return;
+  const open = mainNav.classList.toggle('is-open');
+  navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  navToggle.classList.toggle('is-open', open);
+});
+
+document.getElementById('site-brand-home')?.addEventListener('click', function (e) {
+  e.preventDefault();
+  const homeLink = document.querySelector('.menu a[data-target=".home_view"]');
+  if (homeLink) homeLink.click();
+});
+
+links.forEach((link) => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    links.forEach((l) => l.classList.remove('active'));
+    this.classList.add('active');
+
+    sections.forEach((section) => section.classList.add('hidden'));
+
+    const targetSelector = this.getAttribute('data-target');
+    const target = document.querySelector(targetSelector);
+
+    if (target) {
+      target.classList.remove('hidden');
+    }
+
+    // При перемиканні розділів сховуємо "Дивитись всі події"
+    resetCommunitySectionsMore();
+
+    closeMobileNav();
+  });
+});
+
+const overlay = document.getElementById('modal-overlay');
+const modalContent = document.querySelector('.modal-content');
+const modalClose = document.querySelector('.modal-close');
+
+function openPhotoModal(img) {
+  if (!img || !modalContent) return;
+  modalContent.innerHTML = '';
+  const bigImg = document.createElement('img');
+  bigImg.src = img.src;
+  bigImg.alt = img.alt || 'Розпорядок богослужінь';
+  bigImg.className = 'modal-photo';
+  modalContent.appendChild(bigImg);
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (modalContent) modalContent.innerHTML = '';
+}
+
+document.addEventListener('click', function (e) {
+  const photo = e.target.closest('.schedule-photo img');
+  if (!photo) return;
+  e.preventDefault();
+  e.stopPropagation();
+  photo.classList.add('schedule-photo-open');
+  openPhotoModal(photo);
+});
+
+modalClose?.addEventListener('click', closeModal);
+overlay?.addEventListener('click', function (e) {
+  if (e.target === overlay) closeModal();
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && overlay?.classList.contains('is-open')) closeModal();
+});
+
+function resetUmhVideos() {
+  document.querySelectorAll('.umh_view .umh-event-card__poster').forEach((poster) => {
+    poster.removeAttribute('hidden');
+    poster.style.removeProperty('display');
+  });
+  document.querySelectorAll('.umh_view .umh-event-card__player-wrap').forEach((wrap) => {
+    wrap.setAttribute('hidden', '');
+  });
+  document.querySelectorAll('.umh_view .umh-event-card__iframe').forEach((iframe) => {
+    iframe.removeAttribute('src');
+  });
+}
+
+/* Події з "головної" сторінки: керуються об'єктами */
+const HOME_PAGE_EVENTS = [
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/K6jtdAhJ_5U?rel=0',
+    title: 'Сьогодні, у день Воскресіння Христового, після завершення пасхальної вечірні на церковному подвір’ї наша громада радісно проводила гаївки',
+    text: 'Сьогодні, у день Воскресіння Христового, після завершення пасхальної вечірні на церковному подвір’ї наша громада радісно проводила гаївки. Їх організував отець Ігор за гарної підтримки молоді УМХ Лавриків, дитячого хору, а також за участі школи й садочка. Лунали традиційні гаївки — «Вербовая дощечка», «Кривий танець», «Сію мак» та багато інших. У веселих забавах брали участь як діти, так і дорослі, створюючи справжню атмосферу великодньої радості. На завершення священник почастував усіх діток маленькими шоколадними писанками. Христос Воскрес!',
+    date: '12 квітня 2026',
+    places: { umh: true, new_hor: true, multimedia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/Easter/668819851_122224485674286276_8525140995278297647_n.jpg',
+      'img/Easter/671480163_122224485848286276_7788914234999942431_n.jpg',
+      'img/Easter/671371851_122224486112286276_8801563531562092294_n.jpg',
+      'img/Easter/671107125_122224485794286276_3540059937632606115_n.jpg',
+      'img/Easter/670493801_122224485272286276_5690452448536719295_n.jpg',
+      'img/Easter/670484888_122224485524286276_1633856562440225099_n.jpg',
+      'img/Easter/669849424_122224486076286276_111399701198472302_n.jpg',
+      'img/Easter/669655300_122224486010286276_1575183453490838839_n.jpg',
+      'img/Easter/669602894_122224485890286276_5382156199977086138_n.jpg',
+      'img/Easter/669334897_122224485836286276_662413348093445245_n.jpg'
+    ],
+    videoUrl: '',
+    title: 'Світло Христового Воскресіння наповнило нашу парафію радістю і молитвою',
+    text: 'Світло Христового Воскресіння наповнило нашу парафію радістю і молитвою. Урочисто звершили Пасхальну Божественну Літургію, обійшли храм, співаючи перед зачиненими дверима: «Христос Воскрес!» Молилися, освячували пасхальні кошики та щиро вітали один одного радісним: «Христос Воскрес!» Нехай ця пасхальна радість завжди живе у наших серцях!',
+    date: '12 квітня 2026',
+    places: {mariiska_druzhina: true, multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/Paladiy_Kopot/658840286_122223018218286276_7317348352924843784_n.jpg',
+      'img/Paladiy_Kopot/657914742_122223018704286276_8420602491148860001_n.jpg',
+      'img/Paladiy_Kopot/657128158_122223018734286276_773109301883440066_n.jpg',
+      'img/Paladiy_Kopot/658918032_122223018794286276_5868361938213192285_n.jpg',
+      'img/Paladiy_Kopot/659079628_122223018806286276_8553213543647251582_n.jpg',
+    ],
+    videoUrl: '',
+    title: 'Духовний спомин за ієромонахом Паладієм Копоть',
+    text: 'Духовний спомин за ієромонахом Паладієм Копоть У нашій парафії відбувся зворушливий духовний спомин за ієромонахом Паладієм Копоть — пастирем, який своїм життям і служінням залишив глибокий слід у серцях вірних. У суботу була звершена заупокійна Божественна Літургія, під час якої ми молитовно згадували отця Паладія перед Божим престолом. У спільній молитві парафіяни дякували Господу за дар його життя та просили для нього вічного упокою в оселях праведних. У неділю, після Божественної Літургії, зі вступним словом до вірних звернувся отець Ігор, наголосивши на важливості пам’яті про тих, хто вірно служив Богові та людям. Особливо зворушливою стала розповідь внучатої  племінниці отця Паладія, яка поділилася спогадами про його життя, ревне служіння у монастирях і обителях, а також про непрості часи переслідувань, коли він, незважаючи на труднощі, повертався до свого рідного села Кіпті, щоб підтримати віру людей. Завершенням цих пам’ятних заходів стала панахида на цвинтарі. Священник, родина та односельчани спільно піднесли молитву за упокій душі ієромонаха Паладія, просячи для нього Царства Небесного та вічної радості у Господі. Нехай світла пам’ять про цього вірного слугу Божого завжди живе у наших серцях, а його приклад буде для нас дороговказом у християнському житті. Вічная пам’ять!',
+    date: '29 березня 2026',
+    places: {multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/willow-twigs/photo_1.jpg',
+      'img/willow-twigs/photo_2.jpg',
+      'img/willow-twigs/photo_3.jpg',
+      'img/willow-twigs/photo_4.jpg',
+      'img/willow-twigs/photo_5.jpg',
+      'img/willow-twigs/photo_6.jpg',
+      'img/willow-twigs/photo_7.jpg',
+      'img/willow-twigs/photo_8.jpg',
+      'img/willow-twigs/photo_9.jpg',
+
+    ],
+    videoUrl: '',
+    title: 'УМХ організувала реалізацію вербових гілочок 🌿',
+    text: 'Напередодні свята Входу Господнього в Єрусалим наша молодіжна спільнота організувала реалізацію вербових гілочок 🌿 Це не просто символ свята, а частинка праці, любові та єдності нашої молоді, яка з радістю долучилася до цієї ініціативи.',
+    date: '29 березня 2026',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/9z6gGJa_tK0?rel=0',
+    title: 'Нові учасники',
+    text: 'Сьогодні, 21 березня, наша молодіжна християнська спільнота «Українська молодь Христові» при церкві Різдва Пресвятої Богородиці села Лавриків радо поповнилася новими учасниками. Ми щиро прийняли наших кандидатів, ознайомили їх зі структурою та місією спільноти, поділилися планами на майбутнє. Зустріч пройшла в теплій і радісній атмосфері: разом провели цікаві квести, які допомогли краще пізнати одне одного та відчути дух єдності. Цьогоріч до нашої спільноти приєдналося 12 нових учасників. Віримо, що вони принесуть із собою нове натхнення, креативні ідеї та живу енергію, щоб разом ще глибше пізнавати і знаходити Всеблагого Господа. Нехай Господь благословить наш шлях і провадить кожного з нас!',
+    date: '22 березня 2026',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/week of spirituality/653700964_122222010800286276_2768047965860986217_n.jpg',
+      'img/week of spirituality/653703230_122222010932286276_119288287725813763_n.jpg',
+      'img/week of spirituality/653924643_122222010788286276_2843503589431532862_n.jpg',
+      'img/week of spirituality/655518445_122222010896286276_4731639182402192915_n.jpg',
+    ],
+    videoUrl: '',
+    title: 'Тиждень духовності',
+    text: 'В рамках проведення Українською Греко-Католицькою Церквою тижня духовності «Духовний GPS» у нашій школі відбувся надзвичайно гарний і благословенний духовний тиждень. Щодня ми розпочинали із спільної молитви, молилися вервицю, проводили духовні уроки в класах, де роздумували над шляхом до Спасителя. Відбулися також зустрічі з учнями 3, 7, 8 та 9 класів. Особливим моментом стала спільна молитва у храмі: діти разом зі священником та батьками молилися Хресну дорогу за Україну, за перемогу і за наших воїнів. Священник висловив щиру подяку нашим вчителям за активність, гарну підготовку та щире служіння. Особлива подяка нашим учням. Дякуємо всім, хто долучився до цього благодатного часу духовного зростання!',
+    date: '20 березня 2026',
+    places: {multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/1year-umh/photo-1year-umh1.jpg',
+      'img/1year-umh/photo-1year-umh2.jpg',
+      'img/1year-umh/photo-1year-umh3.jpg',
+    ],
+    videoUrl: '',
+    title: 'Рік УМХ',
+    text: 'Слава Ісусу Христу! ми разом відсвяткували перший рік спільноти УМХ Лавриків — рік дружби, спільних справ, щирих розмов, підтримки та крутих подій. За цей час ми стали справжньою командою, навчилися працювати разом, допомагати одне одному й створювати атмосферу, куди хочеться повертатися знову і знову. Дякую кожному, хто є частиною нашої спільноти. Саме люди роблять це місце живим, теплим і особливим. Попереду ще більше зустрічей, ідей, проєктів і спільних перемог. Це тільки початок 💫',
+    date: '18 березня 2026',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/road of the cross/639063860_122219324222286276_2104654536416739457_n.jpg',
+      'img/road of the cross/639218993_122219324216286276_4902864355806283683_n.jpg',
+      'img/road of the cross/641428419_122219324336286276_8832813686866912696_n.jpg',
+      'img/road of the cross/641431243_122219324240286276_32861615926624121_n.jpg',
+      'img/road of the cross/641431482_122219324306286276_3478163712920538439_n.jpg',
+    ],
+    videoUrl: '',
+    title: 'У нашій святині відбулося освячення 14 стацій нової Хресної дороги',
+    text: 'Сьогодні, у Сиропусну неділю — день, який називаємо воротами до Великого посту, — у нашій святині відбулося освячення 14 стацій нової Хресної дороги. Це особливий і важливий духовний дар для нашої парафії, адже саме у час Великого посту вірні зможуть молитися Хресну дорогу, роздумуючи над страстями Господа нашого Ісуса Христа та духовно проходячи разом із Ним усі 14 стацій Його спасительної жертви. Нехай ця Хресна дорогат стане для кожного наочним і глибоким знаком мук і страждань Ісуса Христа, які Він добровільно прийняв із любові до кожного з нас. Нехай вона допомагає нам глибше пережити час покаяння, навернення та духовного очищення. Висловлюємо щиру і сердечну подяку жертводавцям за цей цінний дар і за їхню молитовну та матеріальну підтримку нашої парафії і святині. Нехай Господь щедро благословить їх за доброту серця і жертовність, а ця Хресна дорога служить на духовну користь усім вірним, особливо у благословенний час Великого посту.',
+    date: '22 лютого  2026',
+    places: {multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/trevel-unh/photo-trevel-umh1.jpg',
+      'img/trevel-unh/photo-trevel-umh2.jpg',
+      'img/trevel-unh/photo-trevel-umh3.jpg',
+      'img/trevel-unh/photo-trevel-umh4.jpg',
+      'img/trevel-unh/photo-trevel-umh5.jpg',
+      'img/trevel-unh/photo-trevel-umh6.jpg',
+      'img/trevel-unh/photo-trevel-umh7.jpg',
+      'img/trevel-unh/photo-trevel-umh8.jpg',
+      'img/trevel-unh/photo-trevel-umh9.jpg',
+      'img/trevel-unh/photo-trevel-umh10.jpg',
+      'img/trevel-unh/photo-trevel-umh11.jpg',
+      'img/trevel-unh/photo-trevel-umh12.jpg',
+      'img/trevel-unh/photo-trevel-umh13.jpg',
+      'img/trevel-unh/photo-trevel-umh14.jpg',
+      'img/trevel-unh/photo-trevel-umh15.jpg',
+    ],
+    videoUrl: '',
+    title: 'Поїздка УМХ',
+    text: 'Сьогодні наша спільнота УМХ с. Лавриків мали поїздку до Львова Організатором цієї поїздки став наш священник — отець Ігор, за що щиро йому дякуємо. Першою зупинкою стала церква святого Андрія. Після спільної молитви та цікавої екскурсії ми відвідали пам’ятники королю Данилу Галицькому та Тарасу Григоровичу Шевченку. Також мали нагоду помолитися біля статуї Пресвятої Богородиці в центрі Львова, помилуватися величчю та красою Львівського оперного театру й навіть потрапили на сторінки Львівської газети. Наступним важливим місцем нашої подорожі став Гарнізонний храм святих апостолів Петра і Павла, де ми віддали шану полеглим воїнам, молячись за їхні душі та за мир в Україні. Опісля, прогулюючись площею Ринок, ми відвідали Домініканський собор, а згодом смачно пообідали. День продовжився активним відпочинком — катанням на ковзанах та прогулянкою красивою територією.  Усі учасники поїздки отримали багато позитивних емоцій і гарних вражень. Ця подорож стала знаком плідної співпраці молодіжної спільноти УМХ з нашою парафією та селом, а також ще одним кроком до духовного зростання і єдності. Нехай Господь щедро дарує всім мир, благословення та натхнення на добрі справи.',
+    date: '30 січня 2026',
+    places: { umh: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/_HGgn8WAVus?rel=0',
+    title: 'Вертеп',
+    text: 'УМХ Лавриків 2025-2026 вертеп',
+    date: '28 грудня 2026',
+    places: { umh: true,  },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/GKLAxUa4UB4?rel=0',
+    title: '✨ Благодійний ярмарок «Тепло нашими руками для ЗСУ» біля нашого храму ✨',
+    text: '✨ Благодійний ярмарок «Тепло нашими руками для ЗСУ» біля нашого храму ✨ З великою радістю та вдячністю хочемо поділитися радісною новиною: при нашій парафії відбувся благодійний ярмарок на підтримку Захисників та Захисниць України. З ініціативи о. Ігоря, за підтримки спільноти УМХ Лавриків, а також завдяки щирим та небайдужим серцям наших парафіян нам вдалося зреалізувати добру і важливу справу — провести ярмарок, тепло якого створене власноруч. Не залишилися осторонь і наші односельчани — вони щедро долучилися домашньою випічкою, солодощами та іншими смаколиками. Навіть апарат для виготовлення солодкої вати приніс свій перший солодкий внесок задля підтримки ЗСУ. Щиро дякуємо кожному, хто долучився до ярмарку: хто допомагав, жертвував, купував, підтримував нас. Завдяки вам ця подія стала можливою. Нехай Господь благословить усіх, хто творить добро! 💙💛',
+    date: '16 листопада 2025',
+    places: { umh: true,  },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/MYkiC9v4MjU?rel=0',
+    title: 'Дорогий отче Ігоре! Вітаємо вас із днем народження!',
+    text: 'Дорогий отче Ігоре! Вітаємо вас із днем народження! 🎉 У відео ми вже сказали багато слів, але хочемо ще раз подякувати за ваше добре серце, щиру молитву та служіння. Нехай Господь дарує вам здоров’я, радість і силу на кожен день, а ми завжди будемо поруч із вдячністю та любов’ю. З повагою – ваша спільнота ❤️',
+    date: '27 серпня 2025',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/IQ7CPd7R-zA?rel=0',
+    title: '🎬✨ Запрошуємо на перегляд фільму під відкритим небом! ✨🎬',
+    text: '🎬✨ Запрошуємо на перегляд фільму під відкритим небом! ✨🎬 Дорогі шанувальники кіно! У неділю, 24 серпня, о 20:30 біля нашого храму відбудеться особливий вечір – спільний перегляд фільму просто неба. 🌌 Щоб вам було зручно та затишно, візьміть із собою: 🟢 каримати або пледи, 🟢 теплий одяг, 🟢 гарний настрій і друзів. Приходьте всією родиною, буде нагода гарно та корисно провести час разом! 💒🤗 📍Місце: біля храму Різдва Пресвятої Богородиці с. Лавриків 🕢 Час: 20:30',
+    date: '23 серпня 2025',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/fhBtgUO3s8U?rel=0',
+    title: 'Ну ось і завершився наш 3-денний табір у селі Думичі',
+    text: 'Ну ось і завершився наш 3-денний табір у селі Думичі. Дякуємо за теплу атмосферу, щирі усмішки та море емоцій! Нам було дуже приємно провести цей час разом з вами. Ці дні були наповнені живим спілкуванням, веселощами та Божою присутністю. Щиро вдячні вам за гостинність🫶🏻',
+    date: '3 серпня 2025',
+    places: { umh: true },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/IivjZq3xZEU?rel=0',
+    title: 'Наші веселі Канікули з Богом у селі Нова Скварява добігли кінця!',
+    text: 'Ну ось... Наші веселі Канікули з Богом у селі Нова Скварява добігли кінця! Ми були щиро раді провести з вами цих чудових 5 днів — наповнених радістю, усмішками, піснями, молитвою, іграми та теплим спілкуванням. Ми отримали багато яскравих емоцій і безцінного досвіду 🌟 Дякуємо вам, Нова Скварява, за вашу гостинність, щирість і відкриті серця. Ми будемо сумувати 🩷',
+    date: '25 липня 2025',
+    places: { umh: true },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/9EMQebupie4?rel=0',
+    title: 'Нaшi «канікули з Богом» добігли кінця',
+    text: 'Нaшi «канікули з Богом» добігли кінця. Це був неймовірний час, сповнений радості, сміху, дружби, ігор, танців, пісень та Божої любові. Ми щиро дякуємо кожному, хто був з нами, хто долучився, допомагав, підтримував і просто був поруч. Ми були безмежно раді провести цей тиждень разом — з вами, з нашими чудовими дітьми! До нових зустрічей наступного року!🩷',
+    date: '12 липня 2025',
+    places: { umh: true },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl:'https://www.youtube.com/embed/o6npu1wCtj8?rel=0',
+    title: 'Прийняли спільноти з Потилич',
+    text: 'Сьогоднішня Божественна Літургія була особливою, адже до нас завітали гості з села Потелич. Разом з нашим отцем Ігорем Літургію співслужив отець Михайло — душпастир з Потелича. Молитва лунала ще глибше і щиріше під супровід прекрасного співу молодіжного хору, що прибув разом із священником. Після Літургії отець Михайло подарував нашому священнику памʼятну тарілочку розписану власноруч майстринею з дитячого хору. Опісля відбулася тепла і жива зустріч молоді: всі охочі мали змогу познайомитися через цікаві ігри, банси, вікторину на знання Книги Буття. На завершення учасники разом смакували запечену в казанах картоплю та провели активний відпочинок, граючи у волейбол, бадмінтон та інші веселі ігри. А завершили королівським бансом. Наше УМХ щиро дякує гостям за цей радісний і благословенний день, молитви та єдності у Христі!',
+    date: '7 липня 2025',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/for-dads/photo_for_dads1.jpg',
+      'img/for-dads/photo_for_dads2.jpg',
+      'img/for-dads/photo_for_dads3.jpg',
+      'img/for-dads/photo_for_dads4.jpg',
+      'img/for-dads/photo_for_dads5.jpg',
+    ],
+    videoUrl: '',
+    title: 'Привітання татів',
+    text: 'Слава Ісусу Христу! Сьогодні наша спільнота щиро вітала всіх чоловіків із Днем батька! Ми висловили вдячність татам, дідусям, наставникам — усім, хто щодня дарує любов, турботу й підтримку. Дякуємо за вашу силу, мудрість і натхнення! Нехай це свято буде сповнене тепла, щирих обіймів і сімейної радості. 💙',
+    date: '15 червня 2025',
+    places: { umh: true, multimedia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/1-june/june_1.jpg',
+      'img/1-june/june_2.jpg',
+      'img/1-june/june_3.jpg',
+      'img/1-june/june_4.jpg',
+      'img/1-june/june_5.jpg',
+      'img/1-june/june_6.jpg',
+      'img/1-june/june_7.jpg',
+      'img/1-june/june_8.jpg',
+      'img/1-june/june_9.jpg',
+    ],
+    videoUrl: '',
+    title: '1 червня',
+    text: 'Слава Ісусу Христу! Сьогодні наша молодіжна спільнота з радістю підготувала цікавий захід для дітей! Разом ми весело танцювали банс, брали участь у захоплюючих іграх та просто гарно проводили час. Було багато сміху, радості й щирих дитячих емоцій. А після розваг на дітей чекав приємний солодкий сюрприз — який став чудовим завершенням нашого спільного дозвілля. Дякуємо всім, хто долучився!🫶🏻',
+    date: '1 червня 2025',
+    places: { umh: true, multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/meet-warrior/photo_meet-warrior_1.jpg',
+      'img/meet-warrior/photo_meet-warrior_2.jpg',
+      'img/meet-warrior/photo_meet-warrior_3.jpg',
+      'img/meet-warrior/photo_meet-warrior_4.jpg',
+      'img/meet-warrior/photo_meet-warrior_5.jpg',
+      'img/meet-warrior/photo_meet-warrior_6.jpg',
+    ],
+    videoUrl: '',
+    title: 'Зустрічаємо Героя',
+    text: 'Слава Ісусу Христу. Сьогодні (31.05.2025) наша громада зустрічала загиблого воїна Думича Василя Степановича. З глибоким сумом і вдячністю в серці. Члени нашої молодіжної спільноти стояли обабіч дороги, тримаючи державні прапори. Це був наш тихий, але щирий знак шани — символ памʼяті, підтримки та єдності поколінь. Вічна памʼять Герою. Слава Україні!',
+    date: '31 травня 2025',
+    places: { umh: true, multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/for-mums/photo_day_mums1.jpg',
+      'img/for-mums/photo_day_mums2.jpg',
+      'img/for-mums/photo_day_mums3.jpg',
+      'img/for-mums/photo_day_mums4.jpg',
+      'img/for-mums/photo_day_mums5.jpg',
+      'img/for-mums/photo_day_mums6.jpg',
+      'img/for-mums/photo_day_mums7.jpg',
+      'img/for-mums/photo_day_mums8.jpg',
+      'img/for-mums/photo_day_mums9.jpg',
+    ],
+    videoUrl: '',
+    title: 'Привітання матерів',
+    text: 'Христос Воскрес! Наша молодіжна спільнота з радістю та натхненням готувалася до святкування Дня матері. З великою любов’ю ми підготували маленькі подарунки для всіх жінок — мам, бабусь, дівчат і навіть найменших дівчаток. Ці символічні презенти — наш спосіб подякувати за тепло, ніжність, турботу та підтримку, які ви щодня даруєте світу. Хай ці невеличкі знаки уваги принесуть вам посмішку і нагадають, як сильно ми вас цінуємо!',
+    date: '11 травня 2025',
+    places: { umh: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/wX_-Q3PDrdg?rel=0',
+    title: 'Христос Воскрес!',
+    text: 'Дорогі у христі. Сердечно вітаємо вас від імені молодіжної спільноти нашої церкви! У цей благословенний час дякуємо Богові за можливість бути разом — у вірі та молитві. Нехай Господь благословить кожну вашу справу, дарує мир у серцях і укріплює у вірі. З любов’ю у Христі, УМХ Лавриків🫶🏻',
+    date: '20 квітня 2025',
+    places: { umh: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/9vwpxmfH94c?rel=0',
+    title: 'розважання над гробом Господнім',
+    text: 'Слава Ісусу Христу! Наша молодіжна спільнота храму Різдва Пресвятої Богородиці с. Лавриків у молитві душі і серця провадила розважання над гробом Господнім. Цього дня молитву прикрасив дитячий хор, який своєю чистою і щирою піснею додав глибини духовному переживанню.',
+    date: '19 квітня 2025',
+    places: { umh: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/x6avwlOEh8g?rel=0',
+    title: 'Біблійний гурток у різдвяному дусі єдності та радості',
+    text: 'Біблійний гурток у різдвяному дусі єдності та радості. Під час Різдвяних Свят відбулася чергова зустріч біблійного гуртка парафії Різдва Пресвятої Богородиці села Лавриків. Ця особлива зустріч була наповнена щирою радістю, молитвою та прославою новонародженого Ісусика. Учасники гуртка колядували, прославляючи народження Спасителя, ділилися радістю Різдва та спільно переживали атмосферу братерської єдності. Також усі мали змогу переглянути гарний і зворушливий фільм «Свята ніч», який допоміг глибше відчути духовний зміст цих благословенних днів. Зустріч пройшла в теплій, родинній атмосфері, сповненій щирих усмішок, добрих слів і християнської любові. Усі вітали один одного традиційним різдвяним привітом: «Христос рождається!» — «Славімо Його!» Нехай радість Різдва наповнює наші серця миром, надією та Божим благословенням.',
+    date: '30 грудня 2025',
+    places: { community_of_biblia: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/70KUr7y7FrI?rel=0',
+    title: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ',
+    text: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ. У цьому заході взяв участь наш церковний хор с.Лавриків Храму Різдва Пресвятої Богородиці і виконав твір «Святий вечір добрий вечір».',
+    date: '27 грудня 2025',
+    places: { old_hor: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/yvzS2bYYEz4?rel=0',
+    title: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ',
+    text: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ. У цьому заході взяв участь наш церковний хор с.Лавриків Храму Різдва Пресвятої Богородиці і виконав твір «Святий вечір добрий вечір».',
+    date: '27 грудня 2025',
+    places: { old_hor: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/1nMy5s2uRqs?rel=0',
+    title: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ',
+    text: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ. У цьому заході взяв участь наш церковний хор с.Лавриків Храму Різдва Пресвятої Богородиці і виконав твір «Святий вечір добрий вечір».',
+    date: '27 грудня 2025',
+    places: { old_hor: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/tly84s-voZU?rel=0',
+    title: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ',
+    text: '26 грудня у селещі Магерів відбувся різдвяний Єпархіальний фестиваль З НАМИ БОГ. У цьому заході взяв участь наш церковний хор с.Лавриків Храму Різдва Пресвятої Богородиці і виконав твір «Святий вечір добрий вечір».',
+    date: '27 грудня 2025',
+    places: { old_hor: true, multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/biblia3/595554181_122210805500286276_3999536518651329483_n.jpg',
+      'img/biblia3/595614333_122210805566286276_2164794478585050492_n.jpg',
+      'img/biblia3/595732670_122210805542286276_1343603403598369604_n.jpg',
+      'img/biblia3/596784209_122210805524286276_4149800806292536716_n.jpg',
+      'img/biblia3/597234565_122210805602286276_3112245226111155842_n.jpg'
+    ],
+    videoUrl: '',
+    title: 'У нашому Біблійному гуртку відбулося справді тепле та радісне свято',
+    text: 'У нашому Біблійному гуртку відбулося справді тепле та радісне свято. Цього дня до нас завітав особливий гість — таємний Святий Миколай, який приніс  не лише подарунки, але й добрий настрій, щиру усмішку та нагадування про силу милосердя. Учасники гуртка щиро дякували Святому Миколаю за його добро, увагу та приємну несподіванку. Подія стала справжньою прикрасою нашого спільного духовного життя та ще більше об’єднала нас у спільній молитві й взаємній підтримці. Свято Миколая в Біблійному гуртку залишило по собі багато світлих емоцій та спогадів, які грітимуть нас ще довго. Хай приклад Святого Миколая надихає кожного з нас чинити добро і дарувати тепло ближнім!',
+    date: '7 грудня 2025',
+    places: { community_of_biblia: true, multimedia: true,},
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/7peadOzXblQ?rel=0',
+    title: 'Парафіяни Лаврикова та Зубейок здійснили паломництво',
+    text: 'Парафіяни Лаврикова та Зубейок здійснили паломництво до відпустового центру блаженного священномученика Симеона Лукача Парафіяни з Лаврикова та Зубейок разом зі своїм отцем вирушили у спільну паломницьку мандрівку до відпустового центру блаженного священномученика Симеона Лукача у Старуні. Ця поїздка стала для всіх справжнім духовним досвідом, сповненим молитви, віри та єдності. У Старуні прочани взяли участь у Божественній Літургії, щиро приступили до Святої Сповіді та прийняли Святе Причастя. Після богослужіння парафіяни мали змогу послухати історичну довідку про це благодатне місце та про життя блаженного священномученика Симеона Лукача — відданого пастиря нашої Церкви, який пройшов дорогою переслідувань і мучеництва, залишившись вірним Христові до кінця. Особливою частиною паломництва стала спільна молитва Хресної Дороги, яка кожному нагадала про глибину Христових страждань і велич Його любові. Духовна мандрівка продовжилася у Древньому Галичі. Парафіяни відвідали музей, де ознайомилися з історією та святинями цього давнього християнського центру. Особливе враження на прочан справили виставки, присвячені священничим і єпископським ризам, а також реліквіям давніх часів. Уся поїздка була наповнена щирою молитвою: парафіяни разом молили вервицю, співали побожні пісні, підносили до Бога спільні прохання та подяки. Молитовний дух супроводжував прочан від початку і до завершення мандрівки, роблячи цей день духовно багатим і незабутнім',
+    date: '19 листопада 2025',
+    places: { apostol: true, multimedia: true,},
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/biblia2/578763277_122207795888286276_3859145689371304446_n.jpg',
+      'img/biblia2/578817696_122207795954286276_6678107731503268776_n.jpg',
+      'img/biblia2/578850105_122207795882286276_7483653903930488273_n.jpg',
+      'img/biblia2/578973129_122207795978286276_570666641640241474_n.jpg',
+      'img/biblia2/579164238_122207795966286276_5844836624823217538_n.jpg'
+    ],
+    videoUrl: '',
+    title: 'Сьогодні в нашій спільноті відбулася чергова зустріч',
+    text: 'Біблійний гурток у нашій спільноті Сьогодні в нашій спільноті відбулася чергова зустріч. Як завжди, ми разом читали Святе Письмо, розважали над Божим словом та ділилися духовними свідченнями. Такі зустрічі завжди наповнюють серця миром і радістю, адже кожне слово Писання відкриває перед нами глибину Божої любові. Однак цього разу наш гурток мав ще одну приємну подію. Ми сердечно привітали з днем народження нашого аніматора  Марію, яка вже тривалий час з любов’ю і відданістю провадить біблійні зустрічі. Спільнота у відео вітанні побажала їй міцного здоров’я, Божого благословення та натхнення у подальшому служінні. Нехай ті Божі слова, які ми разом читаємо й роздумуємо над ними, приносять рясні плоди у житті кожного з нас, а особливо — в житті Марії, яка допомагає нам зростати у вірі.',
+    date: '9 листопада 2025',
+    places: { community_of_biblia: true, },
+  },
+  {
+    type: 'photo',
+    photos: [
+      'img/biblia_start/112233.jpg',
+      'img/biblia_start/518248311_122192908340286276_396128243151682822_n.jpg',
+      'img/biblia_start/519035420_122192908376286276_8173018203020005610_n.jpg'
+    ],
+    videoUrl: '',
+    title: 'Сьогодні, ми розпочали роботу нашого біблійного гуртка',
+    text: 'Слава Ісусу Христу! Сьогодні, у недільний вечір, ми розпочали роботу нашого біблійного гуртка. Аніматорка нашого зібрання, Марія Сало, ознайомила всіх учасників із правилами гуртка, а також звернула увагу на те, що кожен і кожна з нас має можливість уголос поділитися роздумами над прочитаним біблійним уривком. Цього вечора ми читали Євангеліє від Марка, ділилися особистими роздумами та ознайомлювалися з коментарями святих отців. Щиро дякуємо всім учасникам і запрошуємо на наступну зустріч у суботу о 20:00.',
+    date: '13 липня 2025',
+    places: { community_of_biblia: true, multimedia: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/HcNtqZ1ChRA?rel=0',
+    title: 'Дорослий Лавриківський церковний хор вітає матерів зі святом.',
+    text: 'Дорослий Лавриківський церковний хор вітає матерів зі святом.',
+    date: '11 травня 2025',
+    places: { old_hor: true, },
+  },
+  {
+    type: 'video',
+    photos: [],
+    videoUrl: 'https://www.youtube.com/embed/rlVxHLtgAmk?rel=0',
+    title: '«У вечірній тиші»',
+    text: '«У вечірній тиші»',
+    date: '17 квітня 2025',
+    places: { new_hor: true, multimedia: true,},
+  },
+];
+
+/*
+  Показ по сторінках через прапорці.
+  - Головна сторінка = `.home_view` (прапорці для неї не потрібні: завжди увімкнена).
+  - Для НОВИХ об'єктів показ на інших сторінках керується через `places`:
+      places: { umh: true, old_hor: true, ... }
+*/
+const MAIN_PLACE_KEY = 'home';
+const OTHER_EVENT_PLACE_KEYS = [
+  // `umh_view` тепер працює як інші секції — тільки якщо ти вказав `places.umh = true`
+  'umh',
+  'old_hor',
+  'new_hor',
+  'community_of_biblia',
+  'apostol',
+  'mariiska_druzhina',
+  'multimedia',
+  'our_work',
+];
+
+const DEFAULT_EVENT_PLACES_STRICT = {
+  [MAIN_PLACE_KEY]: true,
+  umh: false,
+  old_hor: false,
+  new_hor: false,
+  community_of_biblia: false,
+  apostol: false,
+  mariiska_druzhina: false,
+  multimedia: false,
+  our_work: false,
+};
+
+function buildEventPlaceFlags(event) {
+  const placesObj = event && typeof event.places === 'object' && event.places !== null ? event.places : null;
+  const flags = { ...DEFAULT_EVENT_PLACES_STRICT };
+
+  OTHER_EVENT_PLACE_KEYS.forEach((key) => {
+    // Варіант 1: прапорці в `places`
+    if (placesObj && Object.prototype.hasOwnProperty.call(placesObj, key)) {
+      flags[key] = Boolean(placesObj[key]);
+      return;
+    }
+
+    // Варіант 2: прапорці напряму (на випадок, якщо так тобі зручніше)
+    if (typeof event[key] === 'boolean') flags[key] = event[key];
+  });
+
+  flags[MAIN_PLACE_KEY] = true; // головна завжди увімкнена
+  return flags;
+}
+
+const COMMUNITY_EVENTS = HOME_PAGE_EVENTS.map((event) => {
+  const placeFlags = buildEventPlaceFlags(event);
+  // `places` не потрібне для рендера, бо потрібні булеві прапорці вже розкладені по ключах.
+  const { places, ...rest } = event;
+  return { ...placeFlags, ...rest };
+});
+
+const COMMUNITY_SECTION_CLASSES = [
+  'home_view',
+  'umh_view',
+  'old_hor',
+  'new_hor',
+  'community_of_biblia',
+  'apostol',
+  'mariiska_druzhina',
+  'multimedia_view',
+  'our_work_view',
+];
+
+const SECTION_CLASS_TO_EVENT_PLACE_KEY = {
+  home_view: 'home',
+  umh_view: 'umh',
+  old_hor: 'old_hor',
+  new_hor: 'new_hor',
+  community_of_biblia: 'community_of_biblia',
+  apostol: 'apostol',
+  mariiska_druzhina: 'mariiska_druzhina',
+  multimedia_view: 'multimedia',
+  our_work_view: 'our_work',
+};
+
+function getYouTubeVideoId(url) {
+  if (!url) return '';
+  const m = String(url).match(/(?:embed\/|v=|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+  return m ? m[1] : '';
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function createPhotoCardMarkup(event, eventIndex) {
+  const photos = event.photos.map((src) => String(src).trim()).filter(Boolean);
+  const slides = photos.length
+    ? photos
+        .map(
+          (src, i) => `<div class="umh-easter-gallery__slide${i === 0 ? ' is-active' : ''}">
+            <img src="${escapeHtml(src)}" alt="${escapeHtml(event.title)}" loading="lazy" decoding="async">
+          </div>`,
+        )
+        .join('')
+    : `<div class="umh-easter-gallery__slide is-active">
+        <img src="" alt="${escapeHtml(event.title)}" loading="lazy" decoding="async">
+      </div>`;
+
+  const dots = Array.from({ length: photos.length ? photos.length : 1 }, (_, i) => `<span class="umh-easter-gallery__dot${i === 0 ? ' is-active' : ''}"></span>`)
+    .join('');
+
+  return `<article class="umh-event-card" data-event-index="${eventIndex}">
+    <div class="umh-event-card__media">
+      <div class="umh-easter-gallery" data-current="0" aria-label="Галерея: ${escapeHtml(event.title)}">
+        ${slides}
+        <div class="umh-easter-gallery__controls" aria-hidden="true">
+          <button type="button" class="umh-easter-gallery__arrow umh-easter-gallery__arrow--prev">‹</button>
+          <button type="button" class="umh-easter-gallery__arrow umh-easter-gallery__arrow--next">›</button>
+        </div>
+        <div class="umh-easter-gallery__dots" aria-hidden="true">${dots}</div>
+      </div>
+    </div>
+    <div class="umh-event-card__body">
+      <h3 class="umh-event-card__title">${escapeHtml(event.title)}</h3>
+      <p class="umh-event-card__desc">${escapeHtml(event.text)}</p>
+      <time class="umh-event-card__date" datetime="">${escapeHtml(event.date)}</time>
+    </div>
+  </article>`;
+}
+
+function createVideoCardMarkup(event, eventIndex) {
+  const videoId = getYouTubeVideoId(event.videoUrl);
+  const poster = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+
+  return `<article class="umh-event-card" data-event-index="${eventIndex}">
+    <div class="umh-event-card__media">
+      <button type="button" class="umh-event-card__poster" aria-label="Відтворити відео">
+        <img src="${escapeHtml(poster)}" alt="" width="480" height="360" loading="lazy" decoding="async">
+        <span class="umh-event-card__play-fab" aria-hidden="true"></span>
+      </button>
+      <div class="umh-event-card__player-wrap" hidden>
+        <iframe class="umh-event-card__iframe" title="Відео УМХ (YouTube)" data-src="${escapeHtml(event.videoUrl)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="umh-event-card__body">
+      <h3 class="umh-event-card__title">${escapeHtml(event.title)}</h3>
+      <p class="umh-event-card__desc">${escapeHtml(event.text)}</p>
+      <time class="umh-event-card__date" datetime="">${escapeHtml(event.date)}</time>
+    </div>
+  </article>`;
+}
+
+let activeUmhModal = null;
+
+function isValidCommunityPhotoEvent(event) {
+  return (
+    event.type === 'photo' &&
+    Array.isArray(event.photos) &&
+    event.photos.length > 0 &&
+    (!event.videoUrl || !String(event.videoUrl).trim())
+  );
+}
+
+function isValidCommunityVideoEvent(event) {
+  return (
+    event.type === 'video' &&
+    typeof event.videoUrl === 'string' &&
+    event.videoUrl.trim() &&
+    Array.isArray(event.photos) &&
+    event.photos.length === 0
+  );
+}
+
+function renderCommunitySection(sectionClass) {
+  const placeKey = SECTION_CLASS_TO_EVENT_PLACE_KEY[sectionClass];
+  const main = document.getElementById(`events-main-${sectionClass}`);
+  const more = document.getElementById(`events-more-${sectionClass}`);
+  const btn = document.getElementById(`events-show-all-${sectionClass}`);
+  if (!placeKey || !main || !more || !btn) return;
+
+  const filtered = COMMUNITY_EVENTS.map((event, globalIndex) => ({ event, globalIndex }))
+    .filter(({ event }) => event[placeKey] === true)
+    .filter(({ event }) => isValidCommunityPhotoEvent(event) || isValidCommunityVideoEvent(event));
+
+  const first = filtered.slice(0, 3);
+  const rest = filtered.slice(3);
+
+  main.innerHTML = first
+    .map(({ event, globalIndex }) => (event.type === 'photo' ? createPhotoCardMarkup(event, globalIndex) : createVideoCardMarkup(event, globalIndex)))
+    .join('');
+
+  more.innerHTML = rest
+    .map(({ event, globalIndex }) => (event.type === 'photo' ? createPhotoCardMarkup(event, globalIndex) : createVideoCardMarkup(event, globalIndex)))
+    .join('');
+
+  more.classList.add('hidden');
+  more.setAttribute('hidden', '');
+  btn.classList.remove('is-done');
+  btn.style.display = rest.length > 0 ? '' : 'none';
+}
+
+function getAutoplayVideoUrl(url) {
+  if (!url) return '';
+  try {
+    const u = new URL(url, window.location.href);
+    u.searchParams.set('autoplay', '1');
+    u.searchParams.set('mute', '0');
+    u.searchParams.set('playsinline', '1');
+    u.searchParams.set('rel', '0');
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+function buildUmhModalMarkup(event, photoIndex) {
+  if (event.type === 'video') {
+    return `<div class="umh-modal">
+      <div class="umh-modal__media">
+        <div class="umh-modal__video-wrap">
+          <iframe class="umh-modal__iframe" title="Відео УМХ" src="${escapeHtml(getAutoplayVideoUrl(event.videoUrl))}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="umh-modal__info">
+        <h3 class="umh-modal__title">${escapeHtml(event.title)}</h3>
+        <p class="umh-modal__text">${escapeHtml(event.text)}</p>
+        <time class="umh-modal__date" datetime="">${escapeHtml(event.date)}</time>
+      </div>
+    </div>`;
+  }
+
+  const photos = event.photos.map((src) => String(src).trim()).filter(Boolean);
+  const total = photos.length || 1;
+  const safeIndex = ((photoIndex % total) + total) % total;
+  const activeSrc = photos[safeIndex] || '';
+  const dots = Array.from({ length: total }, (_, i) => `<span class="umh-modal__dot${i === safeIndex ? ' is-active' : ''}"></span>`).join('');
+
+  return `<div class="umh-modal">
+    <div class="umh-modal__media">
+      <div class="umh-modal__photo-wrap">
+        <img class="umh-modal__photo" src="${escapeHtml(activeSrc)}" alt="${escapeHtml(event.title)}" loading="lazy" decoding="async">
+        ${total > 1 ? `<button type="button" class="umh-modal__arrow umh-modal__arrow--prev" aria-label="Попереднє фото">‹</button>
+        <button type="button" class="umh-modal__arrow umh-modal__arrow--next" aria-label="Наступне фото">›</button>` : ''}
+      </div>
+      ${total > 1 ? `<div class="umh-modal__dots" aria-hidden="true">${dots}</div>` : ''}
+    </div>
+    <div class="umh-modal__info">
+      <h3 class="umh-modal__title">${escapeHtml(event.title)}</h3>
+      <p class="umh-modal__text">${escapeHtml(event.text)}</p>
+      <time class="umh-modal__date" datetime="">${escapeHtml(event.date)}</time>
+    </div>
+  </div>`;
+}
+
+function openUmhEventModal(eventIndex, photoIndex = 0) {
+  const event = COMMUNITY_EVENTS[eventIndex];
+  if (!event || !modalContent) return;
+  activeUmhModal = { eventIndex, photoIndex };
+  modalContent.innerHTML = buildUmhModalMarkup(event, photoIndex);
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function updatePhotoGallery(gallery, nextIndex) {
+  const slides = Array.from(gallery.querySelectorAll('.umh-easter-gallery__slide'));
+  const dots = Array.from(gallery.querySelectorAll('.umh-easter-gallery__dot'));
+  if (!slides.length) return;
+
+  const normalized = (nextIndex + slides.length) % slides.length;
+  gallery.dataset.current = String(normalized);
+  slides.forEach((slide, i) => slide.classList.toggle('is-active', i === normalized));
+  dots.forEach((dot, i) => dot.classList.toggle('is-active', i === normalized));
+}
+
+function resetCommunitySectionsMore() {
+  COMMUNITY_SECTION_CLASSES.forEach((sectionClass) => {
+    const more = document.getElementById(`events-more-${sectionClass}`);
+    const btn = document.getElementById(`events-show-all-${sectionClass}`);
+    if (!more || !btn) return;
+    more.classList.add('hidden');
+    more.setAttribute('hidden', '');
+    btn.classList.remove('is-done');
+  });
+}
+
+function initCommunityEvents() {
+  // 1) рендер карток по сторінках
+  COMMUNITY_SECTION_CLASSES.forEach((sectionClass) => renderCommunitySection(sectionClass));
+
+  // 2) слухачі на "Дивитись всі події"
+  COMMUNITY_SECTION_CLASSES.forEach((sectionClass) => {
+    const btn = document.getElementById(`events-show-all-${sectionClass}`);
+    const more = document.getElementById(`events-more-${sectionClass}`);
+    if (!btn || !more) return;
+
+    btn.addEventListener('click', function () {
+      more.classList.remove('hidden');
+      more.removeAttribute('hidden');
+      btn.classList.add('is-done');
+    });
+  });
+
+  // 3) модалка по кліку на картку/галерею
+  COMMUNITY_SECTION_CLASSES.forEach((sectionClass) => {
+    const root = document.querySelector(`.${sectionClass}`);
+    if (!root) return;
+
+    root.addEventListener('click', function (e) {
+      const arrow = e.target.closest('.umh-easter-gallery__arrow');
+      if (arrow) {
+        const gallery = arrow.closest('.umh-easter-gallery');
+        if (!gallery) return;
+        const current = Number(gallery.dataset.current || '0');
+        const delta = arrow.classList.contains('umh-easter-gallery__arrow--next') ? 1 : -1;
+        updatePhotoGallery(gallery, current + delta);
+        return;
+      }
+
+      const card = e.target.closest('.umh-event-card');
+      if (!card) return;
+
+      const eventIndex = Number(card.getAttribute('data-event-index'));
+      if (!Number.isFinite(eventIndex)) return;
+
+      const gallery = card.querySelector('.umh-easter-gallery');
+      const currentPhoto = gallery ? Number(gallery.dataset.current || '0') : 0;
+      openUmhEventModal(eventIndex, currentPhoto);
+    });
+  });
+}
+
+initCommunityEvents();
+
+modalContent?.addEventListener('click', function (e) {
+  const arrow = e.target.closest('.umh-modal__arrow');
+  if (!arrow || !activeUmhModal) return;
+  const event = COMMUNITY_EVENTS[activeUmhModal.eventIndex];
+  if (!event || event.type !== 'photo') return;
+  const total = event.photos.length || 1;
+  const delta = arrow.classList.contains('umh-modal__arrow--next') ? 1 : -1;
+  const nextPhotoIndex = (activeUmhModal.photoIndex + delta + total) % total;
+  openUmhEventModal(activeUmhModal.eventIndex, nextPhotoIndex);
+});
+
+// "Дивитись всі події" обробляються у initCommunityEvents()
+
+
+
+
