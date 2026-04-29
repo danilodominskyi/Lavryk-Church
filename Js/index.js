@@ -29,8 +29,7 @@ navToggle?.addEventListener('click', function (e) {
       behavior: 'smooth'
     });
   } else {
-    // При закритті ми НЕ скролимо. 
-    // Якщо воно все одно скролить — спробуємо зафіксувати поточну позицію
+
     const currentScroll = window.scrollY;
     setTimeout(() => {
         window.scrollTo(0, currentScroll);
@@ -142,7 +141,6 @@ const HOME_PAGE_EVENTS = [
       'img/Easter2/679888656_122226111854286276_3310732977000388657_n.jpg',
       'img/Easter2/679982420_122226111986286276_432240008106124094_n.jpg',
       'img/Easter2/679990845_122226111710286276_4568263335690347899_n.jpg',
-      'img/Easter2/680005690_122226111728286276_6365925485498136613_n.jpg',
       'img/Easter2/683199837_122226112022286276_4440351678631159026_n.jpg',
     ],
     videoUrl: '',
