@@ -167,7 +167,7 @@ body {
     padding: 0.5rem 0.85rem;
     color: var(--navy);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
     position: relative;
     transition: color 0.2s;
@@ -911,6 +911,7 @@ body {
         min-height: 200px;
         max-width: none;
     }
+    
 }
 
 /* ——— Контакти ——— */
@@ -1134,7 +1135,7 @@ body {
 }
 
 .modal-content {
-    padding: 2rem 1.5rem 1.5rem;
+    padding: 3rem;
     min-height: 4rem;
 }
 
