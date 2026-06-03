@@ -153,7 +153,6 @@ const HOME_PAGE_EVENTS = [
       'img/the_outpouring_of_the_holy_spirit/711425893_122230061828286276_4610755209841578883_n.jpg',
       'img/the_outpouring_of_the_holy_spirit/711389753_122230061798286276_7710997462254262822_n.jpg',
       'img/the_outpouring_of_the_holy_spirit/711368995_122230061636286276_1298784794071402440_n.jpg',
-      'img/the_outpouring_of_the_holy_spirit/711368995_122230061636286276_1298784794071402440_n.jpg',
       'img/the_outpouring_of_the_holy_spirit/710040085_122230061630286276_7449779932294413766_n.jpg',
       'img/the_outpouring_of_the_holy_spirit/709486378_122230061882286276_8363370283487990635_n.jpg',
       'img/the_outpouring_of_the_holy_spirit/709205796_122230061816286276_3084220923736490229_n.jpg',
